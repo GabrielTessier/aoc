@@ -2,29 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include "../utils/tools.h"
-
-char** read_file_to_array(char* filename, int* size_ret) {
-  FILE* input = fopen(filename, "r");
-  char str[256];
-  int input_size = 0;
-  while (fscanf(input, "%[^\n]\n", str) != EOF) input_size++;
-  fclose(input);
-  char** tab = malloc(sizeof(char*)*input_size);
-  input = fopen(filename, "r");
-  int i = 0;
-  while (fscanf(input, "%[^\n]\n", str) != EOF) {
-    size_t line_size = strlen(str);
-    tab[i] = malloc(sizeof(char)*(line_size+1));
-    strcpy(tab[i], str);
-    i++;
-  }
-  fclose(input);
-  if (size_ret != NULL) *size_ret = input_size;
-  return tab;
-}
 
 bool est_valide1(char** file, int mx, int my, int x, int y, int dx, int dy) {
   char* str = "XMAS";

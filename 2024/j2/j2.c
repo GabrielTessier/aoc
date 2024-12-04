@@ -5,26 +5,6 @@
 #include <stdint.h>
 #include "../utils/tools.h"
 
-char** read_file_to_array(char* filename, int* size_ret) {
-  FILE* input = fopen(filename, "r");
-  char str[256];
-  int input_size = 0;
-  while (fscanf(input, "%[^\n]\n", str) != EOF) input_size++;
-  fclose(input);
-  char** tab = malloc(sizeof(char*)*input_size);
-  input = fopen(filename, "r");
-  int i = 0;
-  while (fscanf(input, "%[^\n]\n", str) != EOF) {
-    size_t line_size = strlen(str);
-    tab[i] = malloc(sizeof(char)*(line_size+1));
-    strcpy(tab[i], str);
-    i++;
-  }
-  fclose(input);
-  if (size_ret != NULL) *size_ret = input_size;
-  return tab;
-}
-
 void* split_to_int(void* line_v) {
   char* line = (char*) line_v;
   if (line[0] == 0) return NULL;

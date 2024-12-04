@@ -3,6 +3,7 @@
 #include <limits.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "tools.h"
 
 int int_comparator(const void* first, const void* second) {
@@ -59,4 +60,24 @@ char** split(char* str, char del, int* nb_sub_ret) {
   }
   if (nb_sub_ret != NULL) *nb_sub_ret = nb_sub;
   return sub_str;
+}
+
+char** read_file_to_array(char* filename, int* size_ret) {
+  FILE* input = fopen(filename, "r");
+  char str[256];
+  int input_size = 0;
+  while (fscanf(input, "%[^\n]\n", str) != EOF) input_size++;
+  fclose(input);
+  char** tab = malloc(sizeof(char*)*input_size);
+  input = fopen(filename, "r");
+  int i = 0;
+  while (fscanf(input, "%[^\n]\n", str) != EOF) {
+    size_t line_size = strlen(str);
+    tab[i] = malloc(sizeof(char)*(line_size+1));
+    strcpy(tab[i], str);
+    i++;
+  }
+  fclose(input);
+  if (size_ret != NULL) *size_ret = input_size;
+  return tab;
 }
