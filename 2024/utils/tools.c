@@ -46,9 +46,9 @@ char** split(char* str, char del, int* nb_sub_ret) {
   char** sub_str = malloc(sizeof(char**)*nb_sub);
   int pos = 0;
   for (int i=0; i<nb_sub; i++) {
-    while (str[pos] == ' ') pos++;
+    while (str[pos] == del) pos++;
     int s = pos;
-    while ((size_t)s < size && str[s] != ' ') s++;
+    while ((size_t)s < size && str[s] != del) s++;
     s -= pos;
     s++;
     sub_str[i] = malloc(sizeof(char*)*s);
